@@ -1,0 +1,42 @@
+{
+    "sga_faq_category": {
+        "column": {
+            "category_id": true,
+            "title": true,
+            "is_active": true,
+            "position": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "sga_faq_category_store": {
+        "column": {
+            "category_id": true,
+            "store_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_SGA_FAQ_CATEGORY_STORE_ID_STORE_STORE_ID": true,
+            "FK_SGA_FAQ_CATEGORY_STORE_CAT_ID_CATALOG_CAT_ID": true
+        }
+    },
+    "sga_faq_question": {
+        "column": {
+            "question_id": true,
+            "category_id": true,
+            "question": true,
+            "response": true,
+            "is_active": true,
+            "position": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_SGA_FAQ_QUESTION_CAT_ID_FAQ_CAT_ID": true
+        }
+    }
+}

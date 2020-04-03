@@ -1,0 +1,43 @@
+<?php
+/** @var \Sga\Faq\Block\Faq $block */
+$categories = $block->getCategories();
+
+$config = [
+    'elements' => [
+        'categories' => '#faqs li',
+        'questions_category' => '#faqs_container .questions',
+        'question' => '#questions_',
+        'question_open' => '#faqs_container .questions .faq-q-name',
+        'question_container' => 'li'
+    ]
+];
+$qs = [];
+
+if (count($categories) > 0) :
+?>
+    <ul id="faqs">
+        <?php $i = 0; foreach ($categories as $category) : $i++ ?>
+            <?php $questions = $block->getQuestionsByCategory($category->getCategoryId()) ?>
+            <?php if (count($questions) > 0) : ?>
+                <?php $qs[$category->getId()] = $questions ?>
+                <li data-id="<?php echo $category->getId() ?>" class="<?php echo $i == 1 ? 'active' : '' ?>"><?php echo $category->getTitle() ?></li>
+            <?php endif ?>
+        <?php endforeach ?>
+    </ul>
+
+    <div id="faqs_container">
+        <?php $i = 0; foreach ($qs as $categoryId => $questions) : $i++ ?>
+            <ul id="questions_<?php echo $categoryId ?>" class="questions" style="<?php echo $i == 1 ? '' : 'display:none' ?>">
+                <?php foreach ($questions as $question) : ?>
+                    <li>
+                        <label class="faq-q-name"><?php echo $question->getQuestion() ?></label>
+                        <div class="response"><?php echo $block->getResponseHtml($question->getResponse()) ?></div>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        <?php endforeach ?>
+    </div>
+    <script type="text/x-magento-init">
+    {"#faqs": {"Sga_Faq/js/faq": <?= $block->getJsonSerializer()->serialize($config) ?>}}
+    </script>
+<?php endif ?>

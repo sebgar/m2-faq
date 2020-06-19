@@ -2,7 +2,6 @@
 namespace Sga\Faq\Controller\Adminhtml\Question;
 
 use Magento\Framework\App\Action\HttpGetActionInterface;
-use Sga\Faq\Model\Question as Model;
 use Sga\Faq\Controller\Adminhtml\Question as ParentClass;
 
 class Edit extends ParentClass implements HttpGetActionInterface
@@ -10,8 +9,7 @@ class Edit extends ParentClass implements HttpGetActionInterface
     public function execute()
     {
         $id = $this->getRequest()->getParam('question_id');
-        $model = $this->_objectManager->create(Model::class);
-
+        $model = $this->_modelFactory->create();
         if ($id) {
             $model->load($id);
             if (!$model->getId()) {

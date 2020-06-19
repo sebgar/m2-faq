@@ -38,6 +38,6 @@ if (count($categories) > 0) :
         <?php endforeach ?>
     </div>
     <script type="text/x-magento-init">
-    {"#faqs": {"Sga_Faq/js/faq": <?= $block->getJsonSerializer()->serialize($config) ?>}}
+    {"#faqs": {"faq": <?= $block->getJsonSerializer()->serialize($config) ?>}}
     </script>
 <?php endif ?>

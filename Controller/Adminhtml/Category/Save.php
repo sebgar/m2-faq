@@ -2,32 +2,11 @@
 namespace Sga\Faq\Controller\Adminhtml\Category;
 
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
-use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Backend\App\Action\Context;
-use Sga\Faq\Api\CategoryRepositoryInterface as ModelRepositoryInterface;
-use Sga\Faq\Model\CategoryFactory as ModelFactory;
 use Sga\Faq\Controller\Adminhtml\Category as ParentClass;
 
 class Save extends ParentClass implements HttpPostActionInterface
 {
-    protected $dataPersistor;
-    private $modelFactory;
-    private $modelRepository;
-
-    public function __construct(
-        Context $context,
-        DataPersistorInterface $dataPersistor,
-        ModelFactory $modelFactory,
-        ModelRepositoryInterface $modelRepository
-    ) {
-        $this->dataPersistor = $dataPersistor;
-        $this->modelFactory = $modelFactory;
-        $this->modelRepository = $modelRepository;
-
-        parent::__construct($context);
-    }
-
     public function execute()
     {
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
@@ -41,12 +20,12 @@ class Save extends ParentClass implements HttpPostActionInterface
                 $data['category_id'] = null;
             }
 
-            $model = $this->modelFactory->create();
+            $model = $this->_modelFactory->create();
 
             $id = $this->getRequest()->getParam('category_id');
             if ($id) {
                 try {
-                    $model = $this->modelRepository->getById($id);
+                    $model = $this->_modelRepository->getById($id);
                 } catch (LocalizedException $e) {
                     $this->messageManager->addErrorMessage(__('This category no longer exists.'));
                     return $resultRedirect->setPath('*/*/');
@@ -56,9 +35,9 @@ class Save extends ParentClass implements HttpPostActionInterface
             $model->setData($data);
 
             try {
-                $this->modelRepository->save($model);
+                $this->_modelRepository->save($model);
                 $this->messageManager->addSuccessMessage(__('You saved the category.'));
-                $this->dataPersistor->clear('faq_category');
+                $this->_dataPersistor->clear('faq_category');
                 return $this->processReturn($model, $data, $resultRedirect);
             } catch (LocalizedException $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
@@ -66,7 +45,7 @@ class Save extends ParentClass implements HttpPostActionInterface
                 $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the category.'));
             }
 
-            $this->dataPersistor->set('faq_category', $data);
+            $this->_dataPersistor->set('faq_category', $data);
             return $resultRedirect->setPath('*/*/edit', ['category_id' => $id]);
         }
         return $resultRedirect->setPath('*/*/');
@@ -81,14 +60,14 @@ class Save extends ParentClass implements HttpPostActionInterface
         } else if ($redirect === 'close') {
             $resultRedirect->setPath('*/*/');
         } else if ($redirect === 'duplicate') {
-            $duplicateModel = $this->modelFactory->create(['data' => $data]);
+            $duplicateModel = $this->_modelFactory->create(['data' => $data]);
             $duplicateModel->setId(null);
             $duplicateModel->setIsActive(0);
-            $this->modelRepository->save($duplicateModel);
+            $this->_modelRepository->save($duplicateModel);
 
             $id = $duplicateModel->getId();
             $this->messageManager->addSuccessMessage(__('You duplicated the category.'));
-            $this->dataPersistor->set('faq_category', $data);
+            $this->_dataPersistor->set('faq_category', $data);
             $resultRedirect->setPath('*/*/edit', ['category_id' => $id]);
         }
         return $resultRedirect;

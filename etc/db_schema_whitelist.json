@@ -20,7 +20,9 @@
         "constraint": {
             "PRIMARY": true,
             "FK_SGA_FAQ_CATEGORY_STORE_ID_STORE_STORE_ID": true,
-            "FK_SGA_FAQ_CATEGORY_STORE_CAT_ID_CATALOG_CAT_ID": true
+            "FK_SGA_FAQ_CATEGORY_STORE_CAT_ID_CATALOG_CAT_ID": true,
+            "SGA_FAQ_CATEGORY_STORE_STORE_ID_STORE_STORE_ID": true,
+            "SGA_FAQ_CATEGORY_STORE_CATEGORY_ID_SGA_FAQ_CATEGORY_CATEGORY_ID": true
         }
     },
     "sga_faq_question": {
@@ -36,7 +38,8 @@
         },
         "constraint": {
             "PRIMARY": true,
-            "FK_SGA_FAQ_QUESTION_CAT_ID_FAQ_CAT_ID": true
+            "FK_SGA_FAQ_QUESTION_CAT_ID_FAQ_CAT_ID": true,
+            "SGA_FAQ_QUESTION_CATEGORY_ID_SGA_FAQ_CATEGORY_CATEGORY_ID": true
         }
     }
 }

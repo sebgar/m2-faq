@@ -3,7 +3,6 @@ namespace Sga\Faq\Controller\Adminhtml\Category;
 
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Sga\Faq\Controller\Adminhtml\Category as ParentClass;
-use Sga\Faq\Model\Category as Model;
 
 class Delete extends ParentClass implements HttpPostActionInterface
 {
@@ -20,7 +19,7 @@ class Delete extends ParentClass implements HttpPostActionInterface
         $id = $this->getRequest()->getParam('category_id');
         if ($id) {
             try {
-                $model = $this->_objectManager->create(Model::class);
+                $model = $this->_modelFactory->create();
                 $model->load($id);
                 $model->delete();
 

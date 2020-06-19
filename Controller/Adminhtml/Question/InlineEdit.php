@@ -1,23 +1,10 @@
 <?php
 namespace Sga\Faq\Controller\Adminhtml\Question;
 
-use Magento\Backend\App\Action\Context;
-use Sga\Faq\Api\QuestionRepositoryInterface as ModelRepository;
 use Sga\Faq\Controller\Adminhtml\Question as ParentClass;
 
 class InlineEdit extends ParentClass
 {
-    protected $_modelRepository;
-
-    public function __construct(
-        Context $context,
-        ModelRepository $modelRepository
-    ) {
-        $this->_modelRepository = $modelRepository;
-
-        parent::__construct($context);
-    }
-
     public function execute()
     {
         $resultJson = $this->_jsonFactory->create();

@@ -3,18 +3,15 @@ namespace Sga\Faq\Model;
 
 use Sga\Faq\Api\QuestionRepositoryInterface;
 use Sga\Faq\Api\Data\QuestionInterface as ModelInterface;
-use Sga\Faq\Api\Data\QuestionInterfaceFactory as ModelInterfaceFactory;
-use Sga\Faq\Api\Data\QuestionSearchResultsInterfaceFactory as SearchResultsInterfaceFactory;
 use Sga\Faq\Model\QuestionFactory as ModelFactory;
 use Sga\Faq\Model\ResourceModel\Question as ResourceModel;
 use Sga\Faq\Model\ResourceModel\Question\CollectionFactory as ModelCollectionFactory;
-use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Magento\Framework\Api\SearchResultsInterface as SearchResultsInterfaceFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Store\Model\StoreManagerInterface;
 
 class QuestionRepository implements QuestionRepositoryInterface
@@ -23,37 +20,27 @@ class QuestionRepository implements QuestionRepositoryInterface
     protected $modelFactory;
     protected $modelCollectionFactory;
     protected $searchResultsFactory;
-    protected $dataObjectHelper;
-    protected $dataObjectProcessor;
-    protected $dataFactory;
-    private $storeManager;
-    private $collectionProcessor;
+    protected $storeManager;
+    protected $collectionProcessor;
 
     public function __construct(
         ResourceModel $resource,
         ModelFactory $modelFactory,
-        ModelInterfaceFactory $dataFactory,
         ModelCollectionFactory $modelCollectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory,
-        DataObjectHelper $dataObjectHelper,
-        DataObjectProcessor $dataObjectProcessor,
         StoreManagerInterface $storeManager,
         CollectionProcessorInterface $collectionProcessor
     ) {
         $this->resource = $resource;
         $this->modelFactory = $modelFactory;
-        $this->dataFactory = $dataFactory;
         $this->modelCollectionFactory = $modelCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataObjectHelper = $dataObjectHelper;
-        $this->dataObjectProcessor = $dataObjectProcessor;
         $this->storeManager = $storeManager;
         $this->collectionProcessor = $collectionProcessor;
     }
 
     public function save(ModelInterface $model)
     {
-
         try {
             $this->resource->save($model);
         } catch (\Exception $exception) {

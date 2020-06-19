@@ -3,18 +3,15 @@ namespace Sga\Faq\Model;
 
 use Sga\Faq\Api\CategoryRepositoryInterface;
 use Sga\Faq\Api\Data\CategoryInterface as ModelInterface;
-use Sga\Faq\Api\Data\CategoryInterfaceFactory as ModelInterfaceFactory;
-use Sga\Faq\Api\Data\CategorySearchResultsInterfaceFactory as SearchResultsInterfaceFactory;
 use Sga\Faq\Model\CategoryFactory as ModelFactory;
 use Sga\Faq\Model\ResourceModel\Category as ResourceModel;
 use Sga\Faq\Model\ResourceModel\Category\CollectionFactory as ModelCollectionFactory;
-use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Magento\Framework\Api\SearchResultsInterface as SearchResultsInterfaceFactory;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Store\Model\StoreManagerInterface;
 
 class CategoryRepository implements CategoryRepositoryInterface
@@ -24,29 +21,21 @@ class CategoryRepository implements CategoryRepositoryInterface
     protected $modelCollectionFactory;
     protected $searchResultsFactory;
     protected $dataObjectHelper;
-    protected $dataObjectProcessor;
-    protected $dataFactory;
-    private $storeManager;
-    private $collectionProcessor;
+    protected $storeManager;
+    protected $collectionProcessor;
 
     public function __construct(
         ResourceModel $resource,
         ModelFactory $modelFactory,
-        ModelInterfaceFactory $dataFactory,
         ModelCollectionFactory $modelCollectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory,
-        DataObjectHelper $dataObjectHelper,
-        DataObjectProcessor $dataObjectProcessor,
         StoreManagerInterface $storeManager,
         CollectionProcessorInterface $collectionProcessor
     ) {
         $this->resource = $resource;
         $this->modelFactory = $modelFactory;
-        $this->dataFactory = $dataFactory;
         $this->modelCollectionFactory = $modelCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
-        $this->dataObjectHelper = $dataObjectHelper;
-        $this->dataObjectProcessor = $dataObjectProcessor;
         $this->storeManager = $storeManager;
         $this->collectionProcessor = $collectionProcessor;
     }

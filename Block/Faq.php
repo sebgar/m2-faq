@@ -1,13 +1,15 @@
 <?php
 namespace Sga\Faq\Block;
 
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Cms\Model\Template\FilterProvider;
+use Magento\Widget\Block\BlockInterface;
 use Sga\Faq\Model\CategoryFactory;
 use Sga\Faq\Model\QuestionFactory;
 
-class Faq extends \Magento\Framework\View\Element\Template
+class Faq extends Template implements BlockInterface
 {
     protected $_categoryFactory;
     protected $_questionFactory;
@@ -19,14 +21,15 @@ class Faq extends \Magento\Framework\View\Element\Template
         CategoryFactory $categoryFactory,
         QuestionFactory $questionFactory,
         Json $jsonSerializer,
-        FilterProvider $filterProvider
+        FilterProvider $filterProvider,
+        array $data = []
     ) {
         $this->_categoryFactory = $categoryFactory;
         $this->_questionFactory = $questionFactory;
         $this->_jsonSerializer = $jsonSerializer;
         $this->_filterProvider = $filterProvider;
 
-        parent::__construct($context);
+        parent::__construct($context, $data);
     }
 
     public function getJsonSerializer()

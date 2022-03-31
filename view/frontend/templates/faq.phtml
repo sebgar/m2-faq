@@ -27,7 +27,7 @@ if (count($categories) > 0) :
 
     <div id="faqs_container">
         <?php $i = 0; foreach ($qs as $categoryId => $questions) : $i++ ?>
-            <ul id="questions_<?php echo $categoryId ?>" class="questions" style="<?php echo $i == 1 ? '' : 'display:none' ?>">
+            <ul id="questions_<?php echo $categoryId ?>" class="questions" style="<?php echo $i === 1 ? '' : 'display:none' ?>">
                 <?php foreach ($questions as $question) : ?>
                     <li>
                         <label class="faq-q-name"><?php echo $question->getQuestion() ?></label>

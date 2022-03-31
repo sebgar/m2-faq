@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Sga_Widget:etc/widget.xsd">
+    <widget id="faq" class="Sga\Faq\Block\Faq" is_email_compatible="true" ttl="86400">
+        <label translate="true">SGA : Faq</label>
+        <description>SGA : Faq</description>
+        <parameters>
+            <parameter name="title" xsi:type="text" required="false" visible="true">
+                <label translate="true">Title</label>
+            </parameter>
+            <parameter name="template" xsi:type="select" required="true" visible="true">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="faq.phtml" selected="true">
+                        <label translate="true">Default template</label>
+                    </option>
+                </options>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>
